@@ -5,8 +5,7 @@ get_current_ver() {
     }
 }
 
-
-TAG_NAME="$(git describe --exact-match --tags 2>/dev/null)"
+TAG_NAME="$(git describe --exact-match --tags 2>/dev/null || true)"
 
 
 # Not pushing a tag, nothing to do
