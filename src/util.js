@@ -15,7 +15,7 @@
 /**********/
 const os = require('os');
 const path = require('path');
-const jsonToGo = require('../json-to-go');
+const jsonToGo = require('../lib/json-to-go');
 const { g, keys, vscode } = require('./globals');
 /**********/
 

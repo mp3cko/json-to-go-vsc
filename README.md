@@ -6,7 +6,7 @@
 
 #### By default the extension will convert complex JSON automatically when pasting into a Go file.
 
-![Animation showing paste integration in editor](resources/readme-animation.gif)
+![Animation showing paste integration in editor](static/readme-animation.gif)
 
 ### Settings
 

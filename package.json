@@ -126,7 +126,7 @@
   "jest": {
     "testPathIgnorePatterns": [
       "./node_modules/*",
-      "./json-to-go.js"
+      "./lib/json-to-go.js"
     ]
   },
   "scripts": {
