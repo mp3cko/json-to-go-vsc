@@ -1,7 +1,7 @@
 /**
  * JSON to Go extension for VS Code.
  *
- * Date: February 2024
+ * Date: March 2025
  * Author: Mario Petričko
  * GitHub: http://github.com/maracko/json-to-go-vsc
  *
@@ -9,7 +9,6 @@
  * Version 2.0, January 2004
  * http://www.apache.org/licenses/
  *
- * Depends on JSON-to-Go by mholt: https://github.com/mholt/json-to-go. Its source is included in this repo.
  */
 
 /**
@@ -46,9 +45,9 @@ const T = {
   symbol: 'symbol',
   string: 'string',
   undefined: 'undefined',
-  weakmap: 'weakmap',
-  weakref: 'weakref',
-  weakset: 'weakset',
+  weakMap: 'weakMap',
+  weakRef: 'weakRef',
+  weakSet: 'weakSet',
 };
 
 /**
@@ -74,9 +73,9 @@ const _m = {
   '[object String]': [String, T.string],
   '[object Symbol]': [Symbol, T.symbol],
   '[object Undefined]': [undefined, T.undefined],
-  '[object WeakMap]': [WeakMap, T.weakmap],
-  '[object WeakRef]': [WeakRef, T.weakref],
-  '[object WeakSet]': [WeakSet, T.weakset],
+  '[object WeakMap]': [WeakMap, T.weakMap],
+  '[object WeakRef]': [WeakRef, T.weakRef],
+  '[object WeakSet]': [WeakSet, T.weakSet],
 };
 
 /**

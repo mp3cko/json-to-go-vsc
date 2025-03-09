@@ -1,7 +1,7 @@
 /**
  * JSON to Go extension for VS Code.
  *
- * Date: February 2024
+ * Date: March 2025
  * Author: Mario Petričko
  * GitHub: http://github.com/maracko/json-to-go-vsc
  *
@@ -9,14 +9,13 @@
  * Version 2.0, January 2004
  * http://www.apache.org/licenses/
  *
- * Depends on JSON-to-Go by mholt: https://github.com/mholt/json-to-go. Its source is included in this repo.
  */
 
 /**********/
 const os = require('os');
 const path = require('path');
-const jsonToGo = require('../lib/json-to-go');
 const { g, keys, vscode } = require('./globals');
+const jsonToGo = require('../lib/json-to-go');
 /**********/
 
 /**
@@ -105,7 +104,7 @@ async function saveConversion(
 
   await vscode.workspace.fs.writeFile(fUri, Buffer.from(md, 'utf8'));
 
-  return Promise.resolve(md);
+  return md;
 }
 /**
  * I throw, you catch?

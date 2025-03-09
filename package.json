@@ -130,7 +130,7 @@
     ]
   },
   "scripts": {
-    "lint": "eslint ./src",
+    "lint": "eslint ./src ./lib/cache.js",
     "test": "jest",
     "build": "vsce package",
     "publish-marketplace": "vsce publish",

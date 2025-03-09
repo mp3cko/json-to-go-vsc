@@ -1,3 +1,16 @@
+/**
+ * JSON to Go extension for VS Code.
+ *
+ * Date: March 2025
+ * Author: Mario Petričko
+ * GitHub: http://github.com/maracko/json-to-go-vsc
+ *
+ * Apache License
+ * Version 2.0, January 2004
+ * http://www.apache.org/licenses/
+ *
+ */
+
 const { type, T } = require('../src/type');
 
 describe('type function', () => {
@@ -15,9 +28,9 @@ describe('type function', () => {
     expect(type(new Error()).all).toEqual([T.error, T.object]);
     expect(type(new Map()).all).toEqual([T.map, T.object]);
     expect(type(new Set()).all).toEqual([T.object, T.set]);
-    expect(type(new WeakMap()).all).toEqual([T.object, T.weakmap]);
-    expect(type(new WeakSet()).all).toEqual([T.object, T.weakset]);
-    expect(type(new WeakRef({})).all).toEqual([T.object, T.weakref]);
+    expect(type(new WeakMap()).all).toEqual([T.object, T.weakMap]);
+    expect(type(new WeakSet()).all).toEqual([T.object, T.weakSet]);
+    expect(type(new WeakRef({})).all).toEqual([T.object, T.weakRef]);
     expect(type(Promise.resolve()).all).toEqual([T.object, T.promise]);
     expect(type(Symbol('sym')).all).toEqual([T.symbol]);
   });
@@ -71,8 +84,8 @@ describe('type function', () => {
     expect(type(123).equalsType('123')).toBe(false);
   });
 
-  test('is should check if object is of all provided types', () => {
-    expect(type([]).is(T.object, T.array)).toBe(true);
+  test('is should check if object is of all provided types, with array or variadic args', () => {
+    expect(type([]).is([T.object, T.array])).toBe(true);
     expect(type([]).is(T.object, T.string)).toBe(false);
   });
 
@@ -84,6 +97,10 @@ describe('type function', () => {
   test('match should match types correctly', () => {
     expect(type([]).match({ is: T.array, isNot: T.string })).toBe(true);
     expect(type([]).match({ is: T.array, isNot: T.object })).toBe(false);
+  });
+
+  test('empty match should return true', () => {
+    expect(type([]).match()).toBe(true);
   });
 
   test('toString should return string representation of types', () => {

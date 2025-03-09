@@ -1,7 +1,7 @@
 /**
  * JSON to Go extension for VS Code.
  *
- * Date: February 2024
+ * Date: March 2025
  * Author: Mario Petričko
  * GitHub: http://github.com/maracko/json-to-go-vsc
  *
@@ -9,11 +9,11 @@
  * Version 2.0, January 2004
  * http://www.apache.org/licenses/
  *
- * Depends on JSON-to-Go by mholt: https://github.com/mholt/json-to-go. Its source is included in this repo.
  */
 
 /**********/
 const vscode = require('vscode');
+
 const { type, T } = require('./type');
 /**********/
 
@@ -149,7 +149,7 @@ function newGlobals(input = {}) {
 
     disposables: [],
 
-    dispose: function () {
+    dispose() {
       this.disposables.forEach((d) => d.dispose());
       this.disposables.length = 0;
 
@@ -209,7 +209,7 @@ function ListenerControllerInitializer() {
   this.enable = (li, ev) => {
     if ((!isFunc(li) || !isFunc(ev)) && (!isFunc(list) || !isFunc(evSrc))) {
       throw NewError(
-        `To enable ListenerController for the first time must provide listener and event source, have args:[${type(li).all} and ${type(ev).all}]`,
+        `To enable ListenerController for the first time must provide listener and event source, have args: [${type(li).all} and ${type(ev).all}]`,
       );
     }
 
@@ -226,7 +226,7 @@ function ListenerControllerInitializer() {
       );
     }
 
-    if (disp && isFunc(disp.dispose)) {
+    if (isFunc(disp?.dispose)) {
       disp.dispose();
     }
 
@@ -238,16 +238,16 @@ function ListenerControllerInitializer() {
   };
 
   this.dispose = () => {
-    let op = false;
-    if (disp && isFunc(disp.dispose)) {
+    if (isFunc(disp?.dispose)) {
       disp.dispose();
       disp = undefined;
-      op = true;
 
       simpleLog(`ListenerController(${this.name}): disposed [${++nDisp}]`);
+
+      return true;
     }
 
-    return op;
+    return false;
   };
 
   return this;
@@ -262,7 +262,7 @@ function ListenerControllerInitializer() {
 function deepCopy(obj) {
   if (!isObj(obj)) return obj;
 
-  let copy = Array.isArray(obj) ? [] : {};
+  const copy = Array.isArray(obj) ? [] : {};
   for (let key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       copy[key] = deepCopy(obj[key]);

@@ -1,7 +1,7 @@
 /**
  * JSON to Go extension for VS Code.
  *
- * Date: February 2024
+ * Date: March 2025
  * Author: Mario Petričko
  * GitHub: http://github.com/maracko/json-to-go-vsc
  *
@@ -9,13 +9,12 @@
  * Version 2.0, January 2004
  * http://www.apache.org/licenses/
  *
- * Depends on JSON-to-Go by mholt: https://github.com/mholt/json-to-go. Its source is included in this repo.
  */
 
 /**********/
-const { lKey, convertText, saveConversion, isComplexJSON } = require('./util');
 const { keys, g, vscode, enums } = require('./globals');
 const { type } = require('./type');
+const { lKey, convertText, saveConversion, isComplexJSON } = require('./util');
 /**********/
 
 /**
@@ -23,23 +22,25 @@ const { type } = require('./type');
  * @param {vscode.TextDocumentChangeEvent} ev The event object.
  */
 async function onDidChangeTextDocumentListener(ev) {
-  let langs = g.ctx.globalState.get(lKey(keys.ctx.temp.pasteIntegrationLangs));
+  const langs = g.ctx.globalState.get(
+    lKey(keys.ctx.temp.pasteIntegrationLangs),
+  );
   if (!langs.includes('*') && !langs.includes(ev.document.languageId)) {
-    return Promise.resolve();
+    return;
   }
 
   let clipTxt = await vscode.env.clipboard.readText();
-  if (!clipTxt || clipTxt.length < 2) return Promise.resolve();
+  if (!clipTxt || clipTxt.length < 2) return;
 
-  let [replacePattern, lineSep] =
+  const [replacePattern, lineSep] =
     ev.document.eol === vscode.EndOfLine.CRLF
       ? [/\n/g, '\r\n']
       : [/\r\n/g, '\n'];
 
   clipTxt = clipTxt.replace(replacePattern, lineSep).trim();
 
-  for (let change of ev.contentChanges) {
-    let changeTxt = change.text.trim();
+  for (const change of ev.contentChanges) {
+    const changeTxt = change.text.trim();
     if (
       changeTxt.length < 2 ||
       !isComplexJSON(changeTxt) ||
@@ -61,8 +62,8 @@ async function onDidChangeTextDocumentListener(ev) {
       struct = convertText(clipTxt, structName);
     }
 
-    let lines = changeTxt.split(lineSep);
-    let replaceRange = new vscode.Range(
+    const lines = changeTxt.split(lineSep);
+    const replaceRange = new vscode.Range(
       change.range.start,
       new vscode.Position(
         change.range.start.line + (lines.length > 1 ? lines.length - 1 : 0),
@@ -71,7 +72,7 @@ async function onDidChangeTextDocumentListener(ev) {
       ),
     );
 
-    let edit = new vscode.WorkspaceEdit();
+    const edit = new vscode.WorkspaceEdit();
     edit.replace(ev.document.uri, replaceRange, struct.go);
 
     await vscode.workspace.applyEdit(edit);
@@ -80,8 +81,6 @@ async function onDidChangeTextDocumentListener(ev) {
       await saveConversion(changeTxt, struct.go);
     }
   }
-
-  return Promise.resolve();
 }
 
 /**
@@ -90,13 +89,11 @@ async function onDidChangeTextDocumentListener(ev) {
  */
 async function onDidChangeConfigurationListener(ev) {
   if (ev.affectsConfiguration(lKey(keys.settings.pasteIntegration.self))) {
-    let { langs } = await updatePasteContext();
+    const { langs } = await updatePasteContext();
     langs.length > 0
       ? await g.li.onDidChangeTextDocument.enable()
       : await g.li.onDidChangeTextDocument.dispose();
   }
-
-  return Promise.resolve();
 }
 
 /**
@@ -110,7 +107,7 @@ async function onDidChangeConfigurationListener(ev) {
  * @returns {Promise<PasteContext>} The current configuration values.
  */
 async function updatePasteContext() {
-  let ctx = {
+  const ctx = {
     langs: g.cfg.get(keys.settings.pasteIntegration.supportedLanguages) || [],
     promptForTypeName:
       g.cfg.get(keys.settings.pasteIntegration.promptForTypeName) || false,
@@ -125,7 +122,7 @@ async function updatePasteContext() {
     ctx.promptForTypeName,
   );
 
-  return Promise.resolve(ctx);
+  return ctx;
 }
 
 module.exports = {

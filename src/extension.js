@@ -1,18 +1,16 @@
 /**
  * JSON to Go extension for VS Code.
  *
- * Date: February 2024
+ * Date: March 2025
  * Author: Mario Petričko
  * GitHub: http://github.com/maracko/json-to-go-vsc
  *
  * Apache License
  * Version 2.0, January 2004
  * http://www.apache.org/licenses/
- *
- * Depends on JSON-to-Go by mholt: https://github.com/mholt/json-to-go. Its source is included in this repo.
  */
 
-/** ********/
+/**********/
 const li = require('./listeners');
 const { type } = require('./type');
 const { keys, enums, g, vscode } = require('./globals');
@@ -25,7 +23,7 @@ const {
   capArray,
   saveConversion,
 } = require('./util');
-/** ********/
+/***********/
 
 /**
  * Activates the extension and sets up the necessary configurations and commands.
@@ -71,9 +69,9 @@ async function activate(ctx) {
         vscode.workspace.onDidChangeTextDocument(li, thisArg, disposables),
     );
 
-    pasteIntegrationLangs.length > 0
-      ? g.li.onDidChangeTextDocument.enable()
-      : g.li.onDidChangeTextDocument.dispose();
+    if (pasteIntegrationLangs.length === 0) {
+      g.li.onDidChangeTextDocument.dispose();
+    }
 
     ctx.subscriptions.push(
       vscode.commands.registerCommand(lKey(keys.cmd.convert), async () => {
@@ -381,13 +379,13 @@ async function initCtx(reset = false) {
     }
   }
 
-  return Promise.resolve(def);
+  return def;
 }
 
 async function resetAllSettings(force = false) {
   const reset = async () => {
     const settings = [
-      keys.settings.addExample,
+      keys.settings.addExamples,
       keys.settings.autoSelectTypeName,
       keys.settings.allOmitEmpty,
       keys.settings.inlineTypeDefinitions,
@@ -411,7 +409,7 @@ async function resetAllSettings(force = false) {
   if (force) {
     await reset();
 
-    return Promise.resolve();
+    return;
   }
 
   const btn = await vscode.window.showInformationMessage(
@@ -434,8 +432,6 @@ async function resetAllSettings(force = false) {
 
     break;
   }
-
-  return Promise.resolve();
 }
 
 function openSettingsWindow() {
@@ -453,7 +449,9 @@ async function handleErr(error) {
   let msg;
 
   if (type(error?.message).isNot(enums.T.string)) {
-    msg = `Error: An unknown error occurred in JSON to Go: ${JSON.stringify(error)}`;
+    msg = `Error: An unknown error occurred in JSON to Go: ${JSON.stringify(
+      error,
+    )}`;
     g.log(msg, true);
 
     return;
