@@ -1,4 +1,4 @@
-eslint ./src >/dev/null 2>&1 || { echo "ESLint failed, aborting commit. Run it manually"; exit 1; }
-yarn test >/dev/null 2>&1 || { echo "Tests failed, aborting commit. Run them manually"; exit 1; }
+yarn lint >/dev/null 2>&1 || { echo "ESLint failed, aborting commit. Run it manually" && exit 1; }
+yarn test >/dev/null 2>&1 || { echo "Tests failed, aborting commit. Run them manually" && exit 1; }
 
 exit 0

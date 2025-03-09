@@ -1,4 +1,13 @@
-TAG_NAME=$(git describe --exact-match --tags 2>/dev/null)
+get_current_ver() {
+    echo "$(node -p "require('./package.json').version")" || {
+        echo "Error: Failed to get current version from package.json"
+        exit 1
+    }
+}
+
+
+TAG_NAME="$(git describe --exact-match --tags 2>/dev/null)"
+
 
 # Not pushing a tag, nothing to do
 if [ -z "$TAG_NAME" ]; then
@@ -11,20 +20,21 @@ if ! echo "$TAG_NAME" | grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+$' >/dev/null; then
     exit 1
 fi
 
-VERSION=$(echo "$TAG_NAME" | sed -E 's/^v?(.+)$/\1/')
+TAG_VERSION=$(echo "$TAG_NAME" | sed -E 's/^v?(.+)$/\1/')
 
-# Check if CHANGELOG.md contains release notes for the tag version
-if ! grep -q "## \[$VERSION\]" CHANGELOG.md; then
-    echo "CHANGELOG.md does not contain release notes for version $VERSION"
+if ! grep -q "## \[$TAG_VERSION\]" CHANGELOG.md; then
+    echo "CHANGELOG.md does not contain release notes for version $TAG_VERSION"
     exit 1
 fi
 
-# Update package.json version
-yarn version --new-version "$VERSION" --no-git-tag-version --no-commit-hooks || exit 1
-git add package.json
 
-# Amend the commit with new version and message
-current_msg=$(git log -1 --pretty=%B)
-git commit --amend -m "$current_msg" -m "chore: bump version to $VERSION"
+if [ "$TAG_VERSION" != "$(get_current_ver)" ]; then
+    yarn version "$TAG_VERSION" || exit 1
+    git add package.json
+
+    # Amend the commit and message
+    current_msg=$(git log -1 --pretty=%B)
+    git commit --amend -m "$current_msg" -m "chore: bump version to $TAG_VERSION"
+fi
 
 exit 0
