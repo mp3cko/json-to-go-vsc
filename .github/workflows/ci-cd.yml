@@ -73,6 +73,9 @@ jobs:
         env:
           VSCE_PAT: ${{ secrets.VSC_MARKETPLACE_PAT }}
 
+      - name: Publish extension to OpenVSX
+        run: yarn publish-ovsx json-to-go-*.vsix -p ${{ secrets.OVSX_TOKEN }}
+
       - name: Extract release notes
         run: sed -n -e "/## \[$EXTENSION_VERSION\]/,/## \[[0-9]*\.[0-9]*\.[0-9]*\]/p" CHANGELOG.md | sed -e "/## \[$EXTENSION_VERSION\]/d" | perl -pe 'BEGIN{undef $/;} s/\n## \[[0-9]*\.[0-9]*\.[0-9]*\]\n/\n/sg' > RELEASE_NOTES.md
 
