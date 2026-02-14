@@ -4,7 +4,7 @@
     "name": "Mario Petričko",
     "email": "mario@petricko.dev"
   },
-  "publisher": "maracko",
+  "publisher": "mp3cko",
   "repository": "https://github.com/mp3cko/json-to-go-vsc",
   "displayName": "JSON to Go",
   "description": "Convert JSON data to Go type definition",
