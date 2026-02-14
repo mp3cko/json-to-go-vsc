@@ -5,7 +5,7 @@
     "email": "mario@petricko.dev"
   },
   "publisher": "maracko",
-  "repository": "https://github.com/maracko/json-to-go-vsc",
+  "repository": "https://github.com/mp3cko/json-to-go-vsc",
   "displayName": "JSON to Go",
   "description": "Convert JSON data to Go type definition",
   "version": "1.4.0",
