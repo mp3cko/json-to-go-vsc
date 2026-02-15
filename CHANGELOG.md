@@ -12,6 +12,10 @@ fix:
 
 - husky pre-push hook to not update version if the version in package.json is already the same as the one being pushed
 
+chore:
+
+- bump node in ci/cd workflow to 20 and update related deps.
+
 ## [1.4.0]
 
 feat:
