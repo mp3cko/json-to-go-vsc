@@ -2,6 +2,12 @@
 
 All notable changes to the "json-to-go" extension will be documented in this file.
 
+## [1.4.1]
+
+feat:
+
+- add publishing of the extension to ovsx, the open vscode marketplace alternative (used by cursor, vscodium and others) in the ci/cd workflow. Thanks for the help @Luiggi33 !
+
 ## [1.4.0]
 
 feat:
