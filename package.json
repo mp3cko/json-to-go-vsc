@@ -8,7 +8,7 @@
   "repository": "https://github.com/mp3cko/json-to-go-vsc",
   "displayName": "JSON to Go",
   "description": "Convert JSON data to Go type definition",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "engines": {
     "vscode": "^1.80.0",
     "node": ">=20.0.0"

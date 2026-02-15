@@ -2,6 +2,12 @@
 
 All notable changes to the "json-to-go" extension will be documented in this file.
 
+## [1.4.2]
+
+fix:
+
+- use old namespace for open-vsx publish action, which requires a new release on regular marketplace too
+
 ## [1.4.1]
 
 feat:
