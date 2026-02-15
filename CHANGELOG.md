@@ -8,6 +8,10 @@ feat:
 
 - add publishing of the extension to ovsx, the open vscode marketplace alternative (used by cursor, vscodium and others) in the ci/cd workflow. Thanks for the help @Luiggi33 !
 
+fix:
+
+- husky pre-push hook to not update version if the version in package.json is already the same as the one being pushed
+
 ## [1.4.0]
 
 feat:
