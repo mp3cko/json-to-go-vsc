@@ -11,7 +11,7 @@
   "version": "1.4.1",
   "engines": {
     "vscode": "^1.80.0",
-    "node": ">=17.0.0"
+    "node": ">=22.0.0"
   },
   "categories": [
     "Formatters",
@@ -139,7 +139,7 @@
   "devDependencies": {
     "@types/glob": "^7.1.3",
     "@types/jest": "^29.5.12",
-    "@types/node": "^12.11.7",
+    "@types/node": "^22.0.0",
     "@types/vscode": "^1.55.0",
     "@vscode/vsce": "^3.7.1",
     "eslint": "^8.52.0",

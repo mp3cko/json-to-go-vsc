@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 TAG_NAME=$(git describe --exact-match --tags 2>/dev/null)
 
 # Not pushing a tag, nothing to do
